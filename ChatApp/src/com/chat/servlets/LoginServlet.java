@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.chat.api.ContactApi;
 import com.chat.api.ContactEmailApi;
@@ -22,24 +24,26 @@ public class LoginServlet extends HttpServlet {
 	ContactEmailApi contactEmailApi=new ContactEmailApi();
 	ContactPswdApi contactPswdApi=new ContactPswdApi();
 	ContactApi contactApi=new ContactApi();
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = "test@email.com";
-		String password = "test";
-//		ContactEmail contactEmail=contactEmailApi.getContactEmailByPrimaryEmail(email);
-//		ContactPswd contactPswd=contactPswdApi.getContactPswdByID(contactEmail.getContactID());
-		Contact contact=contactApi.getContactByID("22");
-		List<String> list=contact.getEmails();
-		System.out.println(contact);
-//		if(password.equals(contactPswd.getPassword()))
-//			System.out.println(true);
-//		else {
-//			System.out.println(false);
-//		}
 	
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String email =request.getParameter("email");
+		String password = request.getParameter("password");
+		ContactEmail contactEmail=contactEmailApi.getContactEmailByPrimaryEmail(email);
+		ContactPswd contactPswd=contactPswdApi.getContactPswdByID(contactEmail.getContactID());
+		
+		
+		if(password.equals(contactPswd.getPassword())) {
+			Cookie cookie=new Cookie("contactID",contactEmail.getContactID());
+			response.addCookie(cookie);
+			HttpSession session=request.getSession();
+			session.setAttribute("contactID", contactEmail.getContactID());
+			response.sendRedirect("welcome.jsp");
+		}
+		else {
+			response.sendRedirect("loginPage.jsp");
+		}
+		
 	}
 
 }

@@ -9,9 +9,9 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 public class DBClass {
 	private static DBClass obj;
-	static DBClass getInstance() {
+	static DBClass getInstance(){
 		if(obj==null)
-		synchronized (DBClass.class) {
+		synchronized (DBClass.class){
 			if(obj==null)
 				obj=new DBClass();
 			}

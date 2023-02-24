@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="securedHeader.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Chat App</title>
 </head>
 <body>
-	<button onclick="location.href='registerPage.jsp'">Register</button>
-	<button onclick="location.href='loginPage.jsp'">Login</button>
+	<form action="LogoutServlet">
+		<input type="submit" value="Logout">
+	</form>
 </body>
 </html>
