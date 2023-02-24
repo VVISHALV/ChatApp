@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String email =request.getParameter("email");
+		String email =request.getParameter("email_address");
 		String password = request.getParameter("password");
 		ContactEmail contactEmail=contactEmailApi.getContactEmailByPrimaryEmail(email);
 		ContactPswd contactPswd=contactPswdApi.getContactPswdByID(contactEmail.getContactID());

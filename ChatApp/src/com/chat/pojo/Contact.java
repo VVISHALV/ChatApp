@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.chat.api.ContactEmailApi;
+import com.chat.dao.DataObject;
 
 public class Contact  {
 	public enum ContactEnum{
@@ -80,6 +81,16 @@ public class Contact  {
 			}
 		}
 		return emails;
+	}
+	
+	public DataObject toDataObject() {
+		HashMap< String,String> map=new HashMap<>();
+		map.put(ContactEnum.firstname.toString(),this.firstName);
+		map.put(ContactEnum.lastname.toString(),this.lastName);
+		map.put(ContactEnum.phone_number.toString(),this.phoneNumber);
+		map.put(ContactEnum.created_at.toString(),this.createdAt);
+		
+		return new DataObject(map);
 	}
 
 	@Override

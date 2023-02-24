@@ -7,35 +7,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class RegisterServlet
- */
+import com.chat.api.ContactApi;
+import com.chat.pojo.Contact;
+
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegisterServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String firstName =request.getParameter("firstName");
+		String lastName =request.getParameter("lastName");
+		String phoneNumber =request.getParameter("phoneNumber");
+		String email_address =request.getParameter("email_address");
+		String password =request.getParameter("password");
+		
+		Contact contact=new Contact();
+		contact.setFirstName(firstName);
+		contact.setLastName(lastName);
+		contact.setPhoneNumber(phoneNumber);
+		contact.setCreatedAt(System.currentTimeMillis()+"");
+		ContactApi contactApi=new ContactApi();
+		System.out.println(contactApi.insertContact(contact));
 	}
 
 }

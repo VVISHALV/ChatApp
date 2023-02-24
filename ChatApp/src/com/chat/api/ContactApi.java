@@ -3,6 +3,7 @@ package com.chat.api;
 import java.util.HashMap;
 
 import com.chat.query.Query;
+import com.chat.dao.DBClass;
 import com.chat.dao.DBQuery;
 import com.chat.dao.DataObject;
 
@@ -12,7 +13,7 @@ import com.chat.pojo.TablesEnum;
 
 public class ContactApi {
 	DBQuery dq = DBQuery.getInstance();
-
+	
 	public Contact getContactByID(String contactID) {
 		Contact contact = new Contact();
 		HashMap<String, String> whereClauseMap = new HashMap<>();
@@ -31,5 +32,10 @@ public class ContactApi {
 		contact = new Contact(dataObject.map);
 		//System.out.println(contact);
 		return contact;
+	}
+	public boolean insertContact(Contact contact) {
+		if(dq.insertQuery(TablesEnum.Contact, contact.toDataObject()))
+			return true;
+		return false;
 	}
 }
